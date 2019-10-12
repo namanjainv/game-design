@@ -1,15 +1,15 @@
 extends KinematicBody
 
 const MOVE_SPEED = 3
-const RAND_MOVEMENT_DISTANCE = 2
 
 onready var raycast = $RayCast
 onready var anim_player = $AnimationPlayer
 
+var rng = RandomNumberGenerator.new()
 var player = null
 var dead = false
 var HITS_TO_DIE = 2
-var SENSE_DISTANCE = null
+var SENSE_DISTANCE = 20
 
 func _ready():
 	anim_player.play("walk")
@@ -20,12 +20,24 @@ func _physics_process(delta):
 		return
 	if player == null:
 		return
+	rng.seed = randi()
+	var vec_movement = null
+	if player.translation.distance_to(translation) > SENSE_DISTANCE:
+		# Move zombie randomly
+		var new_translation = translation
+		new_translation[0] = rng.randi_range(-100,100)
+		new_translation[2] = rng.randi_range(-100,100)
+		vec_movement = new_translation - translation
+	else:
+		# Move zombie to the player
+		vec_movement = player.translation - translation
+		
+	vec_movement = vec_movement.normalized()
+	raycast.cast_to = vec_movement * 1.5
 	
-	var vec_to_player = player.translation - translation
-	vec_to_player = vec_to_player.normalized()
-	raycast.cast_to = vec_to_player * 1.5
+	move_and_collide(vec_movement * MOVE_SPEED * delta)
+		
 	
-	move_and_collide(vec_to_player * MOVE_SPEED * delta)
 	
 	if raycast.is_colliding():
 		var coll = raycast.get_collider()
