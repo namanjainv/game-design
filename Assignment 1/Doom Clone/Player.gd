@@ -5,6 +5,9 @@ const MOUSE_SENS = 0.5
 const MIN_ANGLE = -35.0
 const MAX_ANGLE = 35.0
 
+const HEAD_SHOT_RANGE_LOW = 0.6
+const HEAD_SHOT_RANGE_HIGH = 1.1
+
 onready var anim_player = $AnimationPlayer
 onready var raycast = $RayCast
 
@@ -46,6 +49,9 @@ func _physics_process(delta):
 		anim_player.play("shoot")
 		var coll = raycast.get_collider()
 		if raycast.is_colliding() and coll.has_method("kill"):
+			var shot_height = raycast.get_collision_point().y
+			if shot_height > HEAD_SHOT_RANGE_LOW and shot_height < HEAD_SHOT_RANGE_HIGH:
+				coll.die()
 			coll.kill()
 
 func kill():

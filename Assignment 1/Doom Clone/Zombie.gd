@@ -20,6 +20,7 @@ func _physics_process(delta):
 		return
 	if player == null:
 		return
+		
 	rng.seed = randi()
 	var vec_movement = null
 	if player.translation.distance_to(translation) > SENSE_DISTANCE:
@@ -44,12 +45,16 @@ func _physics_process(delta):
 		if coll != null and coll.name == "Player":
 			coll.kill()
 
+func die():
+	dead = true
+	$CollisionShape.disabled = true
+	anim_player.play("die")
+	HITS_TO_DIE = 0
+
 func kill():
 	HITS_TO_DIE = HITS_TO_DIE - 1
 	if HITS_TO_DIE == 0:
-		dead = true
-		$CollisionShape.disabled = true
-		anim_player.play("die")
+		die()
 
 func set_player(p):
 	player = p
