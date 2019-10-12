@@ -1,12 +1,15 @@
 extends KinematicBody
 
 const MOVE_SPEED = 3
+const RAND_MOVEMENT_DISTANCE = 2
 
 onready var raycast = $RayCast
 onready var anim_player = $AnimationPlayer
 
 var player = null
 var dead = false
+var HITS_TO_DIE = 2
+var SENSE_DISTANCE = null
 
 func _ready():
 	anim_player.play("walk")
@@ -30,9 +33,11 @@ func _physics_process(delta):
 			coll.kill()
 
 func kill():
-	dead = true
-	$CollisionShape.disabled = true
-	anim_player.play("die")
+	HITS_TO_DIE = HITS_TO_DIE - 1
+	if HITS_TO_DIE == 0:
+		dead = true
+		$CollisionShape.disabled = true
+		anim_player.play("die")
 
 func set_player(p):
 	player = p
