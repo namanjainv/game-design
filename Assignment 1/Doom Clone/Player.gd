@@ -2,6 +2,8 @@ extends KinematicBody
 
 const MOVE_SPEED = 4
 const MOUSE_SENS = 0.5
+const MIN_ANGLE = -35.0
+const MAX_ANGLE = 35.0
 
 onready var anim_player = $AnimationPlayer
 onready var raycast = $RayCast
@@ -14,6 +16,11 @@ func _ready():
 func _input(event):
 	if event is InputEventMouseMotion:
 		rotation_degrees.y -= MOUSE_SENS * event.relative.x
+		rotation_degrees.x -= MOUSE_SENS * event.relative.y
+		if rotation_degrees.x < MIN_ANGLE:
+			rotation_degrees.x = MIN_ANGLE
+		if rotation_degrees.x > MAX_ANGLE:
+			rotation_degrees.x = MAX_ANGLE
 
 func _process(delta):
 	if Input.is_action_pressed("exit"):
