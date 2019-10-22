@@ -1,0 +1,89 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Player/Player.gd" type="Script" id=1]
+[ext_resource path="res://Player/Images/crosshair.png" type="Texture" id=2]
+[ext_resource path="res://Player/Images/fps_shooter_sprites.png" type="Texture" id=3]
+[ext_resource path="res://Player/Images/scopeSight.png" type="Texture" id=4]
+
+[sub_resource type="CapsuleShape" id=1]
+
+[sub_resource type="Animation" id=2]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("View/Crosshair/Control/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "shoot"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("View/Crosshair/Control/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 0 ]
+}
+
+[node name="Player" type="KinematicBody"]
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="Camera" type="Camera" parent="."]
+current = true
+
+[node name="View" type="CanvasLayer" parent="."]
+
+[node name="Crosshair" type="TextureRect" parent="View"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = -16.0
+texture = ExtResource( 2 )
+stretch_mode = 4
+
+[node name="Control" type="Control" parent="View/Crosshair"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_top = 416.0
+margin_bottom = 416.0
+
+[node name="Sprite" type="Sprite" parent="View/Crosshair/Control"]
+position = Vector2( 256, -257.587 )
+texture = ExtResource( 3 )
+hframes = 4
+
+[node name="Scopesight" type="TextureRect" parent="View"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 4 )
+expand = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/idle = SubResource( 2 )
+anims/shoot = SubResource( 3 )
+
+[node name="RayCast" type="RayCast" parent="."]
+enabled = true
+cast_to = Vector3( 0, 0, -2000 )
