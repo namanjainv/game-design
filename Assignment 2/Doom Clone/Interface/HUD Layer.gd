@@ -2,6 +2,7 @@ extends CanvasLayer
 
 var elapsedTime = 0
 var lastTime    = 0
+var currentLevel = 1
 
 #-----------------------------------------------------------
 func _ready() :
@@ -67,7 +68,20 @@ func _opponentDied() :
     var timeStr = $'../HUD Layer'.getTimeStr()
   
     print( 'Last opponent died at %s.' % timeStr )
-  
-    $'../Message Layer/Message'.activate( 'Player Wins!\n%s' % timeStr )
+    currentLevel += 1
+    if _checkFile(currentLevel) == false:
+      $'../Message Layer/Message'.activate( 'Player Wins!\n%s' % timeStr )
+    else:
+      print("Move to next level")
+      $'../../World'._loadArena(currentLevel)
 
 #-----------------------------------------------------------
+
+func _checkFile( levelNumber ) :
+  var fName = 'res://Levels/Level-%02d.json' % levelNumber
+
+  var file = File.new()
+  if file.file_exists( fName ) :
+    return true
+  else:
+    return false

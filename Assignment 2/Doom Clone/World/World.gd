@@ -1,12 +1,16 @@
 extends Spatial
 
 const DEFAULT_MAX_AMMO = 10
+var level = 1
 
 #-----------------------------------------------------------
 func _ready() :
   get_tree().paused = false
+  _loadArena(level)
 
-  var levelData = _getLevelData( 1 )
+func _loadArena(level) :
+  _clearArena()
+  var levelData = _getLevelData( level )
 
   var ammo = levelData.get( 'AMMO', null )
   if ammo != null :
@@ -61,22 +65,32 @@ func _addWall( model, parameters ):
     return
   var wallScene = load( model )
   var inst 
+  #- Horizontal Walls
   inst = wallScene.instance()
+  inst.name = "Wall-01"
   inst.translation = Vector3( parameters.get( 'x', null ), parameters.get( 'height', null )*0.5, 0 )
   inst.scale = Vector3( 0.5, parameters.get( 'height', null ), parameters.get( 'z', null ))
   get_node( '.' ).add_child( inst )
+
   inst = wallScene.instance()
+  inst.name = "Wall-02"
   inst.translation = Vector3( -parameters.get( 'x', null ), parameters.get( 'height', null )*0.5, 0 )
   inst.scale = Vector3( 0.5, parameters.get( 'height', null ), parameters.get( 'z', null ))
   get_node( '.' ).add_child( inst )
+  
+  #- Vertical Walls
   inst = wallScene.instance()
+  inst.name = "Wall-03"
   inst.translation = Vector3( 0, parameters.get( 'height', null )*0.5, parameters.get( 'z', null ) )
   inst.scale = Vector3( parameters.get( 'x', null ), parameters.get( 'height', null ), 0.5 )
   get_node( '.' ).add_child( inst )
+
   inst = wallScene.instance()
+  inst.name = "Wall-04"
   inst.translation = Vector3( 0, parameters.get( 'height', null )*0.5, -parameters.get( 'z', null ) )
   inst.scale = Vector3( parameters.get( 'x', null ), parameters.get( 'height', null ), 0.5 )
   get_node( '.' ).add_child( inst )
+  print( "Walls added" )
     
 #-----------------------------------------------------------
 func _addObstacles( model, instances ) :
@@ -154,3 +168,10 @@ func _getLevelData( levelNumber ) :
   return levelData
 
 #-----------------------------------------------------------
+func _clearArena():
+  var defaultNodes = ['Player Audio', 'Player', 'Zombie Audio', 'HUD Layer', 'Message Layer']
+  var worldNode = get_tree().get_root().get_node("World")
+  for child in worldNode.get_children():
+    if not child.name in defaultNodes:
+      worldNode.remove_child(child)
+  worldNode.get_node("Player").translation = Vector3(0, 0, 0)
