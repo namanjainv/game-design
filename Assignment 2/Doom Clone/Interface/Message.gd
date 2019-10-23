@@ -38,6 +38,8 @@ func _on_Restart_pressed() :
   #print( 'paused is now ', get_tree().paused )
 
   # warning-ignore:return_value_discarded
-  get_tree().reload_current_scene()
+  # get_tree().reload_current_scene()
+  visible = false
+  $'../../../World'._loadArena()
 
 #-----------------------------------------------------------

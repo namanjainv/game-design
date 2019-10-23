@@ -1,14 +1,15 @@
 extends Spatial
 
 const DEFAULT_MAX_AMMO = 10
-var level = 1
 
 #-----------------------------------------------------------
 func _ready() :
   get_tree().paused = false
-  _loadArena(level)
+  _loadArena()
 
-func _loadArena(level) :
+func _loadArena() :
+  var level = get_node('HUD Layer')._getLevel()
+  print( level )
   _clearArena()
   var levelData = _getLevelData( level )
 
@@ -28,6 +29,8 @@ func _loadArena(level) :
   if walls != null :
     _addWall( walls.get( 'tscn', null ), walls.get( 'parameters', null ) )
   get_node( 'HUD Layer' )._resetAmmo( levelData.get( 'maxAmmo', DEFAULT_MAX_AMMO ) )
+  
+  get_node( 'Player' )._ready()
 
 #-----------------------------------------------------------
 func _input( __ ) :    # Not using event so don't name it.
@@ -175,3 +178,23 @@ func _clearArena():
     if not child.name in defaultNodes:
       worldNode.remove_child(child)
   worldNode.get_node("Player").translation = Vector3(0, 0, 0)
+
+func _checkFile( levelNumber ) :
+  var fName = 'res://Levels/Level-%02d.json' % levelNumber
+
+  var file = File.new()
+  if file.file_exists( fName ) :
+    return true
+  else:
+    return false
+
+func _updateLevel():
+  var currentLevel = $'HUD Layer'._getLevel() + 1
+  $'HUD Layer'._setLevel(currentLevel)
+  var timeStr = $'HUD Layer'.getTimeStr()
+  if _checkFile(currentLevel) == false:
+    $'HUD Layer'._setLevel(1)
+    $'Message Layer/Message'.activate( 'Player Wins!\n%s' % timeStr )
+  else:
+    print("Move to next level")
+    _loadArena()

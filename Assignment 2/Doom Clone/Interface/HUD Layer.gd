@@ -68,20 +68,12 @@ func _opponentDied() :
     var timeStr = $'../HUD Layer'.getTimeStr()
   
     print( 'Last opponent died at %s.' % timeStr )
-    currentLevel += 1
-    if _checkFile(currentLevel) == false:
-      $'../Message Layer/Message'.activate( 'Player Wins!\n%s' % timeStr )
-    else:
-      print("Move to next level")
-      $'../../World'._loadArena(currentLevel)
+    $'../../World'._updateLevel()
 
 #-----------------------------------------------------------
 
-func _checkFile( levelNumber ) :
-  var fName = 'res://Levels/Level-%02d.json' % levelNumber
+func _getLevel() :
+  return currentLevel
 
-  var file = File.new()
-  if file.file_exists( fName ) :
-    return true
-  else:
-    return false
+func _setLevel(val):
+  currentLevel = val
