@@ -20,6 +20,9 @@ func _ready() :
   if obstacles != null :
     _addObstacles( obstacles.get( 'tscn', null ), obstacles.get( 'instances', [] ) )
 
+  var walls = levelData.get( 'WALLS', null )
+  if walls != null :
+    _addWall( walls.get( 'tscn', null ), walls.get( 'parameters', null ) )
   get_node( 'HUD Layer' )._resetAmmo( levelData.get( 'maxAmmo', DEFAULT_MAX_AMMO ) )
 
 #-----------------------------------------------------------
@@ -52,6 +55,29 @@ func _addAmmo( model, instances ) :
 
     get_node( '.' ).add_child( inst )
 
+func _addWall( model, parameters ):
+  if model == null:
+    print( 'There is no model for Walls defined' )
+    return
+  var wallScene = load( model )
+  var inst 
+  inst = wallScene.instance()
+  inst.translation = Vector3( parameters.get( 'x', null ), parameters.get( 'height', null )*0.5, 0 )
+  inst.scale = Vector3( 0.5, parameters.get( 'height', null ), parameters.get( 'z', null ))
+  get_node( '.' ).add_child( inst )
+  inst = wallScene.instance()
+  inst.translation = Vector3( -parameters.get( 'x', null ), parameters.get( 'height', null )*0.5, 0 )
+  inst.scale = Vector3( 0.5, parameters.get( 'height', null ), parameters.get( 'z', null ))
+  get_node( '.' ).add_child( inst )
+  inst = wallScene.instance()
+  inst.translation = Vector3( 0, parameters.get( 'height', null )*0.5, parameters.get( 'z', null ) )
+  inst.scale = Vector3( parameters.get( 'x', null ), parameters.get( 'height', null ), 0.5 )
+  get_node( '.' ).add_child( inst )
+  inst = wallScene.instance()
+  inst.translation = Vector3( 0, parameters.get( 'height', null )*0.5, -parameters.get( 'z', null ) )
+  inst.scale = Vector3( parameters.get( 'x', null ), parameters.get( 'height', null ), 0.5 )
+  get_node( '.' ).add_child( inst )
+    
 #-----------------------------------------------------------
 func _addObstacles( model, instances ) :
   var inst
@@ -67,7 +93,6 @@ func _addObstacles( model, instances ) :
     index += 1
 
     var pos = instInfo[ 0 ]
-    var amount  = Utils.dieRoll( instInfo[ 1 ] )
 
     inst = obstacleScene.instance()
     inst.name = 'Obstacle-%02d' % index
