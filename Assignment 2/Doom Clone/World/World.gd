@@ -16,6 +16,10 @@ func _ready() :
   if zombies != null :
     _addZombies( zombies.get( 'tscn', null ), zombies.get( 'instances', [] ) )
 
+  var obstacles = levelData.get( 'OBSTACLES', null )
+  if obstacles != null :
+    _addObstacles( obstacles.get( 'tscn', null ), obstacles.get( 'instances', [] ) )
+
   get_node( 'HUD Layer' )._resetAmmo( levelData.get( 'maxAmmo', DEFAULT_MAX_AMMO ) )
 
 #-----------------------------------------------------------
@@ -45,6 +49,30 @@ func _addAmmo( model, instances ) :
     inst.translation = Vector3( pos[0], pos[1], pos[2] )
     inst.setQuantity( amount )
     print( '%s at %s, %d rounds.' % [ inst.name, str( pos ), amount ] )
+
+    get_node( '.' ).add_child( inst )
+
+#-----------------------------------------------------------
+func _addObstacles( model, instances ) :
+  var inst
+  var index = 0
+
+  if model == null :
+    print( 'There were %d obstacles but no model?' % len( instances ) )
+    return
+
+  var obstacleScene = load( model )
+
+  for instInfo in instances :
+    index += 1
+
+    var pos = instInfo[ 0 ]
+    var amount  = Utils.dieRoll( instInfo[ 1 ] )
+
+    inst = obstacleScene.instance()
+    inst.name = 'Obstacle-%02d' % index
+    inst.translation = Vector3( pos[0], pos[1], pos[2] )
+    print( '%s at %s added.' % [ inst.name, str( pos ) ] )
 
     get_node( '.' ).add_child( inst )
 
