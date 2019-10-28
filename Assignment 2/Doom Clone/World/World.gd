@@ -25,9 +25,9 @@ func _loadArena() :
   if obstacles != null :
     _addObstacles( obstacles.get( 'tscn', null ), obstacles.get( 'instances', [] ) )
 
-  var walls = levelData.get( 'WALLS', null )
+  var walls = levelData.get( 'arenaSize', null )
   if walls != null :
-    _addWall( walls.get( 'tscn', null ), walls.get( 'parameters', null ) )
+    _addWall( "res://Components/Wall/Wall.tscn" , walls )
   get_node( 'HUD Layer' )._resetAmmo( levelData.get( 'maxAmmo', DEFAULT_MAX_AMMO ) )
   
   get_node( 'Player' )._ready()
@@ -66,32 +66,42 @@ func _addWall( model, parameters ):
   if model == null:
     print( 'There is no model for Walls defined' )
     return
+    
+  var carpetModel = load ( "res://Components/Floors/Carpet.tscn" )
+
   var wallScene = load( model )
   var inst 
+
+  inst = carpetModel.instance()
+  inst.name = "Floor"
+  inst.scale = Vector3(parameters[0], 1, parameters[1])
+  inst.translation = Vector3(0, -0.1, 0)
+  get_node( '.' ).add_child( inst )
+
   #- Horizontal Walls
   inst = wallScene.instance()
   inst.name = "Wall-01"
-  inst.translation = Vector3( parameters.get( 'x', null ), parameters.get( 'height', null )*0.5, 0 )
-  inst.scale = Vector3( 0.5, parameters.get( 'height', null ), parameters.get( 'z', null ))
+  inst.translation = Vector3( parameters[0]/2, 1.5, 0 )
+  inst.scale = Vector3( 0.5, 3, parameters[1]/2 )
   get_node( '.' ).add_child( inst )
 
   inst = wallScene.instance()
   inst.name = "Wall-02"
-  inst.translation = Vector3( -parameters.get( 'x', null ), parameters.get( 'height', null )*0.5, 0 )
-  inst.scale = Vector3( 0.5, parameters.get( 'height', null ), parameters.get( 'z', null ))
+  inst.translation = Vector3( -parameters[0]/2, 1.5, 0 )
+  inst.scale = Vector3( 0.5, 3, parameters[1]/2 )
   get_node( '.' ).add_child( inst )
   
   #- Vertical Walls
   inst = wallScene.instance()
   inst.name = "Wall-03"
-  inst.translation = Vector3( 0, parameters.get( 'height', null )*0.5, parameters.get( 'z', null ) )
-  inst.scale = Vector3( parameters.get( 'x', null ), parameters.get( 'height', null ), 0.5 )
+  inst.translation = Vector3( 0, 1.5, parameters[1]/2 )
+  inst.scale = Vector3( parameters[0]/2, 3, 0.5 )
   get_node( '.' ).add_child( inst )
 
   inst = wallScene.instance()
   inst.name = "Wall-04"
-  inst.translation = Vector3( 0, parameters.get( 'height', null )*0.5, -parameters.get( 'z', null ) )
-  inst.scale = Vector3( parameters.get( 'x', null ), parameters.get( 'height', null ), 0.5 )
+  inst.translation = Vector3( 0, 1.5, -parameters[1]/2 )
+  inst.scale = Vector3( parameters[0]/2, 3, 0.5 )
   get_node( '.' ).add_child( inst )
   print( "Walls added" )
     
@@ -113,7 +123,7 @@ func _addObstacles( model, instances ) :
 
     inst = obstacleScene.instance()
     inst.name = 'Obstacle-%02d' % index
-    inst.translation = Vector3( pos[0], pos[1], pos[2] )
+    inst.translation = Vector3( pos[0], pos[1]+1, pos[2] )
     print( '%s at %s added.' % [ inst.name, str( pos ) ] )
 
     get_node( '.' ).add_child( inst )
