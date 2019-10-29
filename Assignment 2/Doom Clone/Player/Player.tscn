@@ -47,6 +47,7 @@ shape = SubResource( 1 )
 
 [node name="Camera" type="Camera" parent="."]
 current = true
+far = 1000.0
 
 [node name="View" type="CanvasLayer" parent="."]
 
