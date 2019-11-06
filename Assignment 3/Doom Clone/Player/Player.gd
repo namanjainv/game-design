@@ -84,10 +84,10 @@ func _physics_process( delta ) :
 
 #-----------------------------------------------------------
 func kill() :
-  var timeStr = $'../HUD Layer'.getTimeStr()
-
-  print( 'Player died at %s.' % timeStr )
-
-  $'../Message Layer/Message'.activate( 'Player Died\n%s' % timeStr )
+  $'../HUD Layer'._playerHit()
+  if( $'../HUD Layer'.currentHealth == 0 ):
+    var timeStr = $'../HUD Layer'.getTimeStr()
+    print( 'Player died at %s.' % timeStr )
+    $'../Message Layer/Message'.activate( 'Player Died\n%s' % timeStr )
 
 #-----------------------------------------------------------

@@ -13,6 +13,8 @@ func _loadArena() :
   _clearArena()
   var levelData = _getLevelData( level )
 
+  get_node( 'HUD Layer' )._resetHealth( 5 )
+
   var ammo = levelData.get( 'AMMO', null )
   if ammo != null :
     _addAmmo( ammo.get( 'tscn', null ), ammo.get( 'instances', [] ) )

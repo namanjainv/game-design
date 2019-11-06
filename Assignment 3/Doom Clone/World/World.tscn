@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://World/World.gd" type="Script" id=1]
 [ext_resource path="res://Audio/Pew_Pew-DKnight556-1379997159.wav" type="AudioStream" id=2]
@@ -28,22 +28,28 @@ outline_size = 4
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 8 )
 
-[sub_resource type="DynamicFontData" id=4]
-font_path = "res://Interface/Fonts/Montserrat-ExtraBold.ttf"
-
-[sub_resource type="DynamicFont" id=5]
-size = 48
-outline_size = 4
-outline_color = Color( 0, 0, 0, 1 )
-font_data = SubResource( 4 )
-
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=4]
 size = 48
 outline_size = 4
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 8 )
 
+[sub_resource type="DynamicFontData" id=5]
+font_path = "res://Interface/Fonts/Montserrat-ExtraBold.ttf"
+
+[sub_resource type="DynamicFont" id=6]
+size = 48
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+font_data = SubResource( 5 )
+
 [sub_resource type="DynamicFont" id=7]
+size = 48
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=8]
 size = 48
 outline_size = 4
 outline_color = Color( 0, 0, 0, 1 )
@@ -102,6 +108,17 @@ margin_top = -70.0
 custom_fonts/font = SubResource( 3 )
 text = "00/00"
 
+[node name="Health" type="Label" parent="HUD Layer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 275.0
+margin_bottom = 133.0
+custom_fonts/font = SubResource( 4 )
+text = "0
+"
+align = 1
+valign = 1
+
 [node name="Message Layer" type="CanvasLayer" parent="."]
 editor/display_folded = true
 layer = 100
@@ -130,7 +147,7 @@ anchor_right = 0.5
 margin_left = -242.5
 margin_right = 243.5
 margin_bottom = 104.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 text = "<message>"
 align = 1
 valign = 1
@@ -144,7 +161,7 @@ margin_left = -100.0
 margin_top = -33.0
 margin_right = 100.0
 margin_bottom = 37.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
 text = "Restart"
 
 [node name="Exit" type="Button" parent="Message Layer/Message/Background"]
@@ -156,7 +173,7 @@ margin_left = -100.0
 margin_top = 58.0
 margin_right = 100.0
 margin_bottom = 128.0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 text = "Exit"
 [connection signal="pressed" from="Message Layer/Message/Background/Restart" to="Message Layer/Message" method="_on_Restart_pressed"]
 [connection signal="pressed" from="Message Layer/Message/Background/Exit" to="Message Layer/Message" method="_on_Exit_pressed"]

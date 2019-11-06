@@ -1,8 +1,7 @@
 extends KinematicBody
 
 const MOVE_SPEED = 3
-
-const SENSE_DISTANCE = 20
+const COOLDOWNTIME = 200
 
 onready var raycast = $RayCast
 onready var anim_player = $AnimationPlayer
@@ -10,6 +9,7 @@ onready var anim_player = $AnimationPlayer
 var player = null
 var dead = false
 var health = 1
+var coolDown = 0
 
 #-----------------------------------------------------------
 func _ready() :
@@ -23,13 +23,14 @@ func _physics_process( delta ) :
 
   if player == null :
     return
+  
+  var vec_to_player  
+  if coolDown > COOLDOWNTIME:
+    vec_to_player = player.translation - translation
+  else:
+    vec_to_player = - player.translation + translation
 
-  var vec_to_player = player.translation - translation
-  if vec_to_player.length() > SENSE_DISTANCE :
-    # Too far away to sense the player.  Move in 'random' direction,
-    # which is in RADIANS.  The axis must normalized.
-    vec_to_player = vec_to_player.rotated( Vector3( 0, 1, 0 ), randf()*2*PI )
-
+  coolDown += 1
   vec_to_player = vec_to_player.normalized()
   raycast.cast_to = vec_to_player * 1.5
 
@@ -39,6 +40,7 @@ func _physics_process( delta ) :
   if raycast.is_colliding() :
     var coll = raycast.get_collider()
     if coll != null and coll.name == 'Player' :
+      coolDown = 0
       coll.kill()
 
 #-----------------------------------------------------------

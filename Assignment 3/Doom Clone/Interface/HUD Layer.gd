@@ -77,3 +77,20 @@ func _getLevel() :
 
 func _setLevel(val):
   currentLevel = val
+
+#-----------------------------------------------------------
+
+var maxHealth = 0
+var currentHealth = 0
+
+func _resetHealth( qty ) :
+  maxHealth = qty
+  currentHealth = qty
+  _setPlayerHealthMessage()
+
+func _setPlayerHealthMessage(): 
+  get_node( 'Health' ).text = '%d / %d' % [ currentHealth, maxHealth ]
+
+func _playerHit():
+  currentHealth -= 1
+  _setPlayerHealthMessage()
