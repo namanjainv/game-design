@@ -1,0 +1,45 @@
+{
+  "arenaSize" : [ 75, 75 ],
+  "maxAmmo" : 40,
+
+  "AMMO" : {
+    "tscn" : "res://Meshes/box-gltf/Box.tscn",
+
+    "instances" : [
+      [ [ -20.0, 0, -20.0 ], "19+1d11" ],
+      [ [  20.0, 0,  20.0 ], "19+1d11" ],
+      [ [ -20.0, 0,  20.0 ], "19+1d11" ],
+      [ [  20.0, 0, -20.0 ], "19+1d11" ]
+    ]
+  },
+
+  "OBSTACLES" : {
+    "tscn" : "res://Components/Obstacle/Obstacle.tscn",
+
+    "instances" : [
+      [ [ -20,    0,  -30.0 ] ],
+      [ [ -10,    0,  -30.0 ] ],
+      [ [   0,    0,  -30.0 ] ],
+      [ [  10,    0,  -30.0 ] ],
+      [ [  20,    0,  -30.0 ] ],
+
+      [ [ -20,    0,   30.0 ] ],
+      [ [ -10,    0,   30.0 ] ],
+      [ [   0,    0,   30.0 ] ],
+      [ [  10,    0,   30.0 ] ],
+      [ [  20,    0,   30.0 ] ]
+    ]
+  },
+
+  "ZOMBIES" : {
+    "tscn"  : "res://Zombie/Zombie.tscn",
+
+    "audio" : {
+      "grunt" : "res://Audio/Male Grunt-SoundBible.com-68178715.wav",
+      "die"   : "res://Audio/Wilhelm Scream - 0477.wav"
+    },
+
+    "instances" : [
+      [ [ -29.9256,   0,   8.86691 ], "2d2" ] ]
+  }
+}
