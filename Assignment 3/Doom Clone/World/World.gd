@@ -26,6 +26,10 @@ func _loadArena() :
   var obstacles = levelData.get( 'OBSTACLES', null )
   if obstacles != null :
     _addObstacles( obstacles.get( 'tscn', null ), obstacles.get( 'instances', [] ) )
+	
+  var healthkits = levelData.get( 'FIRSTAID', null )
+  if healthkits != null :
+    _addHealthKits( healthkits.get( 'tscn', null ), healthkits.get( 'instances', [] ) )
 
   var walls = levelData.get( 'arenaSize', null )
   if walls != null :
@@ -154,6 +158,30 @@ func _addZombies( model, instances ) :
     inst.translation = Vector3( pos[0], pos[1], pos[2] )
     inst.setHealth( hp )
     print( '%s at %s, %d hp' % [ inst.name, str( pos ), hp ] )
+
+    get_node( '.' ).add_child( inst )
+
+func _addHealthKits( model, instances ) :
+  var inst
+  var index = 0
+
+  if model == null :
+    print( 'There were %d health kits but no model?' % len( instances ) )
+    return
+
+  var healthKitscene = load( model )
+
+  for instInfo in instances :
+    index += 1
+
+    var pos = instInfo[ 0 ]
+    var amount  = Utils.dieRoll( instInfo[ 1 ] )
+
+    inst = healthKitscene.instance()
+    inst.name = 'Health-%02d' % index
+    inst.translation = Vector3( pos[0], pos[1], pos[2] )
+    inst.setQuantity( amount )
+    print( '%s at %s, %d rounds.' % [ inst.name, str( pos ), amount ] )
 
     get_node( '.' ).add_child( inst )
 
