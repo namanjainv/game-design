@@ -54,6 +54,14 @@
     ]
   },
 
+  "SPAWNING_PILLARS" : {
+    "tscn" : "res://Components/SpawningPillar/spawningPillar.tscn",
+
+    "instances" : [
+      [ [  30,   0,  30 ] , "5d5", "res://Zombie/Zombie.tscn", "2d2", "3d6" ]
+    ]
+  },
+
   "ZOMBIES" : {
     "tscn"  : "res://Zombie/Zombie.tscn",
 

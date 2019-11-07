@@ -70,6 +70,12 @@ func _opponentDied() :
     print( 'Last opponent died at %s.' % timeStr )
     $'../../World'._updateLevel()
 
+func _addZombie() :
+  maxOpponents += 1
+  numOpponents += 1
+  _setOpponentMessage()
+
+
 #-----------------------------------------------------------
 
 func _getLevel() :

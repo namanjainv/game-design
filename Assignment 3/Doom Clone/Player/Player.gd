@@ -92,3 +92,5 @@ func kill() :
     $'../Message Layer/Message'.activate( 'Player Died\n%s' % timeStr )
 
 #-----------------------------------------------------------
+func set_player( ):
+  get_tree().call_group( 'zombies', 'set_player', self )

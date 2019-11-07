@@ -15,6 +15,7 @@ var coolDown = 0
 func _ready() :
   anim_player.play( 'walk' )
   add_to_group( 'zombies' )
+  $'../Player'.set_player()
 
 #-----------------------------------------------------------
 func _physics_process( delta ) :

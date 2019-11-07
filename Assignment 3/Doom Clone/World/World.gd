@@ -21,6 +21,7 @@ func _loadArena() :
 
   var zombies = levelData.get( 'ZOMBIES', null )
   if zombies != null :
+    get_node( 'HUD Layer' )._resetOpponents( len( zombies.get( 'instances', [] ) ) )
     _addZombies( zombies.get( 'tscn', null ), zombies.get( 'instances', [] ) )
 
   var obstacles = levelData.get( 'OBSTACLES', null )
@@ -34,6 +35,12 @@ func _loadArena() :
   var walls = levelData.get( 'arenaSize', null )
   if walls != null :
     _addWall( "res://Components/Wall/Wall.tscn" , walls )
+  get_node( 'HUD Layer' )._resetAmmo( levelData.get( 'maxAmmo', DEFAULT_MAX_AMMO ) )
+  
+  var spawningPillars = levelData.get( 'SPAWNING_PILLARS', null )
+  if healthkits != null :
+    _addSpawningPillars( spawningPillars.get( 'tscn', null ), spawningPillars.get( 'instances', [] ) )
+
   get_node( 'HUD Layer' )._resetAmmo( levelData.get( 'maxAmmo', DEFAULT_MAX_AMMO ) )
   
   get_node( 'Player' )._ready()
@@ -145,8 +152,6 @@ func _addZombies( model, instances ) :
 
   var zombieScene = load( model )
 
-  get_node( 'HUD Layer' )._resetOpponents( len( instances ) )
-
   for instInfo in instances :
     index += 1
 
@@ -182,6 +187,31 @@ func _addHealthKits( model, instances ) :
     inst.translation = Vector3( pos[0], pos[1], pos[2] )
     inst.setQuantity( amount )
     print( '%s at %s, %d rounds.' % [ inst.name, str( pos ), amount ] )
+
+    get_node( '.' ).add_child( inst )
+
+func _addSpawningPillars( model, instances ) :
+  var inst
+  var index = 0
+
+  if model == null :
+    print( 'There were %d spawning pillars but no model?' % len( instances ) )
+    return
+
+  var spawningPillarscene = load( model )
+
+  for instInfo in instances :
+    index += 1
+
+    var pos = instInfo[ 0 ]
+    var time  = Utils.dieRoll( instInfo[ 1 ] )
+
+    inst = spawningPillarscene.instance()
+    inst.name = 'Pillar-%02d' % index
+    inst.translation = Vector3( pos[0], pos[1], pos[2] )
+    inst.setTime( time )
+    inst.setGenerationDetails( instInfo[2], instInfo[3], instInfo[4] )
+    print( '%s at %s, %d spawn time.' % [ inst.name, str( pos ), time ] )
 
     get_node( '.' ).add_child( inst )
 
