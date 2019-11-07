@@ -21,6 +21,7 @@ func _ready():
   yield( get_tree(), 'idle_frame' )
 
   get_tree().call_group( 'zombies', 'set_player', self )
+  get_tree().call_group( 'firstaid', 'set_player', self )
 
 #-----------------------------------------------------------
 func _input( event ) :

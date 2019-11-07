@@ -94,3 +94,13 @@ func _setPlayerHealthMessage():
 func _playerHit():
   currentHealth -= 1
   _setPlayerHealthMessage()
+
+func _increamentHealth ( qty ):
+  if( currentHealth < maxHealth ):
+    var temp = currentHealth + qty
+    currentHealth = temp if temp < maxHealth else maxHealth
+    _setPlayerHealthMessage()
+    return true
+  else:
+    return false
+    
