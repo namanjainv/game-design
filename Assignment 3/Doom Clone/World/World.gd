@@ -38,7 +38,7 @@ func _loadArena() :
   get_node( 'HUD Layer' )._resetAmmo( levelData.get( 'maxAmmo', DEFAULT_MAX_AMMO ) )
   
   var spawningPillars = levelData.get( 'SPAWNING_PILLARS', null )
-  if healthkits != null :
+  if spawningPillars != null :
     _addSpawningPillars( spawningPillars.get( 'tscn', null ), spawningPillars.get( 'instances', [] ) )
 
   get_node( 'HUD Layer' )._resetAmmo( levelData.get( 'maxAmmo', DEFAULT_MAX_AMMO ) )
