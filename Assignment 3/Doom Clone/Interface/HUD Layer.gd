@@ -48,6 +48,15 @@ func _ammoUsed() :
   _setAmmoMessage()
   return success
 
+func _increamentAmmo ( qty ):
+  if( numAmmo < maxAmmo ):
+    var temp = numAmmo + qty
+    numAmmo = temp if temp < maxAmmo else maxAmmo
+    _setAmmoMessage()
+    return true
+  else:
+    return false
+
 #-----------------------------------------------------------
 var maxOpponents = 0
 var numOpponents = 0
@@ -97,8 +106,8 @@ func _resetHealth( qty ) :
 func _setPlayerHealthMessage(): 
   get_node( 'Health' ).text = '%d / %d' % [ currentHealth, maxHealth ]
 
-func _playerHit():
-  currentHealth -= 1
+func _playerHit( howMuch = 1 ):
+  currentHealth -= howMuch
   _setPlayerHealthMessage()
 
 func _increamentHealth ( qty ):

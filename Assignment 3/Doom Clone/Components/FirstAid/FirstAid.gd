@@ -25,9 +25,6 @@ func _on_Area_body_entered(body):
   if( body == player ):
     if( $'../HUD Layer'._increamentHealth( quantity ) ):
       self.queue_free()
-      print("Vanish Box now")
-    else:
-      print("Box remains")
       
 #-----------------------------------------------------------
 func set_player( p ) :

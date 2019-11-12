@@ -21,7 +21,9 @@ func _ready():
   yield( get_tree(), 'idle_frame' )
 
   get_tree().call_group( 'zombies', 'set_player', self )
+  get_tree().call_group( 'ammos', 'set_player', self )
   get_tree().call_group( 'firstaid', 'set_player', self )
+  get_tree().call_group( 'barrels', 'set_player', self )
 
 #-----------------------------------------------------------
 func _input( event ) :
@@ -84,9 +86,9 @@ func _physics_process( delta ) :
       $'../Player Audio'._playSound( 'empty' )
 
 #-----------------------------------------------------------
-func kill() :
-  $'../HUD Layer'._playerHit()
-  if( $'../HUD Layer'.currentHealth == 0 ):
+func kill( howMuch = 1 ) :
+  $'../HUD Layer'._playerHit( howMuch )
+  if( $'../HUD Layer'.currentHealth <= 0 ):
     var timeStr = $'../HUD Layer'.getTimeStr()
     print( 'Player died at %s.' % timeStr )
     $'../Message Layer/Message'.activate( 'Player Died\n%s' % timeStr )
@@ -94,3 +96,8 @@ func kill() :
 #-----------------------------------------------------------
 func set_player( ):
   get_tree().call_group( 'zombies', 'set_player', self )
+
+func burstImpact( barrel_translation, radius, howMuch = 1 ):
+  var dist = translation.distance_to( barrel_translation )
+  if( dist < radius ):
+    kill( howMuch )

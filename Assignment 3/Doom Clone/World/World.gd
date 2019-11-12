@@ -133,10 +133,14 @@ func _addObstacles( model, instances ) :
     index += 1
 
     var pos = instInfo[ 0 ]
+    var hp = Utils.dieRoll( instInfo[ 1 ] )
+    var burst_impact_radius = Utils.dieRoll( instInfo[ 2 ] )
+    var burst_impact_hp = Utils.dieRoll( instInfo[ 3 ] )
 
     inst = obstacleScene.instance()
     inst.name = 'Obstacle-%02d' % index
     inst.translation = Vector3( pos[0], pos[1]+1, pos[2] )
+    inst.setParams( hp, burst_impact_radius, burst_impact_hp )
     print( '%s at %s added.' % [ inst.name, str( pos ) ] )
 
     get_node( '.' ).add_child( inst )

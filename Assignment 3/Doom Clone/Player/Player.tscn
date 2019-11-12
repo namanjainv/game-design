@@ -50,6 +50,7 @@ current = true
 far = 1000.0
 
 [node name="View" type="CanvasLayer" parent="."]
+editor/display_folded = true
 
 [node name="Crosshair" type="TextureRect" parent="View"]
 anchor_left = 0.5

@@ -55,6 +55,7 @@ func hurt( howMuch = 1 ) :
     print( '%s died.' % name )
     $'../Zombie Audio'._playSound( 'die' )
     $'../HUD Layer'._opponentDied()
+    remove_from_group( 'zombies' )
 
   else :
     anim_player.play( 'wounded' )
@@ -70,3 +71,7 @@ func set_player( p ) :
   player = p
 
 #-----------------------------------------------------------
+func burstImpact( barrel_translation, radius, howMuch = 1 ):
+  var dist = translation.distance_to( barrel_translation )
+  if( dist < radius ):
+    hurt( howMuch )
