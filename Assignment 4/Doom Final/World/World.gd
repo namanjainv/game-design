@@ -15,6 +15,10 @@ func _ready() :
   var ammo = levelData.get( 'AMMO', null )
   if ammo != null :
     _addAmmo( ammo.get( 'tscn', null ), ammo.get( 'instances', [] ) )
+	
+  var obstacles = levelData.get( 'OBSTACLES', null )
+  if obstacles != null :
+    _addObstacles( obstacles.get( 'tscn', null ), obstacles.get( 'instances', [] ) )
 
   var zombies = levelData.get( 'ZOMBIES', null )
   if zombies != null :
@@ -37,7 +41,7 @@ func _addArena( floorModel, wallModel, length, breadth ):
   for i in range( (-length/2), (length/2), floorLoopStep) :
     for j in range( (-breadth/2), (breadth/2), floorLoopStep) :
       inst = floorScene.instance()
-      inst.translation = Vector3( i, -1.3, j )
+      inst.translation = Vector3( i, yTranslation, j )
       get_node( '.' ).add_child( inst )
   
   var wallScene = load( wallModel )
@@ -95,6 +99,33 @@ func _addAmmo( model, instances ) :
     inst.translation = Vector3( pos[0], pos[1], pos[2] )
     inst.setQuantity( amount )
     print( '%s at %s, %d rounds.' % [ inst.name, str( pos ), amount ] )
+
+    get_node( '.' ).add_child( inst )
+
+#-----------------------------------------------------------
+func _addObstacles( model, instances ) :
+  var inst
+  var index = 0
+  var yTranslation = -1.4
+
+  if model == null :
+    print( 'There were %d obstacles but no model?' % len( instances ) )
+    return
+
+  var obstacleScene = load( model )
+  print( model )
+  print( obstacleScene ) 
+  for instInfo in instances :
+    index += 1
+
+    var pos = instInfo[ 0 ]
+    var hp  = Utils.dieRoll( instInfo[ 1 ] )
+
+    inst = obstacleScene.instance()
+    inst.name = 'Obstacle-%02d' % index
+    inst.translation = Vector3( pos[0], yTranslation, pos[2] )
+    inst.setHealth( hp )
+    print( '%s at %s, %d hit points.' % [ inst.name, str( pos ), hp ] )
 
     get_node( '.' ).add_child( inst )
 

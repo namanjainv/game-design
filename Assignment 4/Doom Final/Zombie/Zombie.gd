@@ -67,3 +67,9 @@ func set_player( p ) :
   player = p
 
 #-----------------------------------------------------------
+func burstImpact( burst_translation, radius = 1, impact = 1 ):
+  var dist = translation.distance_to( burst_translation ) 
+  if not dead and dist < radius:
+    hurt( impact )
+
+#-----------------------------------------------------------

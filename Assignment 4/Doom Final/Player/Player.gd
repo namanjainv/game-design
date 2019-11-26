@@ -21,6 +21,7 @@ func _ready():
   yield( get_tree(), 'idle_frame' )
 
   get_tree().call_group( 'zombies', 'set_player', self )
+  get_tree().call_group( 'obstacles', 'set_player', self )
 
 #-----------------------------------------------------------
 func _input( event ) :
@@ -77,7 +78,7 @@ func _physics_process( delta ) :
 
       var coll = raycast.get_collider()
       if raycast.is_colliding() and coll.has_method( 'hurt' ) :
-        coll.hurt()
+          coll.hurt()
 
     else :
       $'../Player Audio'._playSound( 'empty' )
@@ -89,5 +90,11 @@ func kill() :
   print( 'Player died at %s.' % timeStr )
 
   $'../Message Layer/Message'.activate( 'Player Died\n%s' % timeStr )
+
+#-----------------------------------------------------------
+func burstImpact( burst_translation, radius = 1, impact = 1 ):
+  var dist = translation.distance_to( burst_translation ) 
+  if dist < radius:
+    kill()
 
 #-----------------------------------------------------------

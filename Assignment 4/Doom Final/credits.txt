@@ -1,7 +1,15 @@
 Art:
 Wall - https://sketchfab.com/3d-models/simple-wood-fence-20-a73260f44d084c9ab06e140a273cd4af
 Floor - https://sketchfab.com/3d-models/stone-floor-6493c7c3913d44debbcdceb3386d2d54
-Barrel - 
+Barrel - https://sketchfab.com/3d-models/metal-barrel-9578b86b4c6147c3982e38811109dd91
 
 
 Sound:
+Barrel Burst - 
+
+Things to complete
+1. Barrel Explode
+2. Head Shot
+3. Spawning Area
+4. Level Change
+5. Health Packs
