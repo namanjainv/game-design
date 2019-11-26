@@ -8,6 +8,10 @@ func _ready() :
 
   var levelData = _getLevelData( 1 )
 
+  var arena = levelData.get('arena', null )
+  if arena != null :
+    _addFloor( arena.get('floorModel', null ), arena.get('length', null), arena.get('breadth', null))
+
   var ammo = levelData.get( 'AMMO', null )
   if ammo != null :
     _addAmmo( ammo.get( 'tscn', null ), ammo.get( 'instances', [] ) )
@@ -22,6 +26,18 @@ func _ready() :
 func _input( __ ) :    # Not using event so don't name it.
   if Input.is_action_just_pressed( 'maximize' ) :
     OS.window_fullscreen = not OS.window_fullscreen
+
+func _addFloor( model, length, breadth ):
+  var inst
+  var floorScene = load( model )
+  var yTranslation = -1.3
+  var floorLoopStep = 2
+  for i in range( int(-length/2), int(length/2), floorLoopStep) :
+    for j in range( int(-breadth/2), int(breadth/2), floorLoopStep) :
+      inst = floorScene.instance()
+      inst.translation = Vector3( i, -1.3, j )
+      get_node( '.' ).add_child( inst ) 
+  
 
 #-----------------------------------------------------------
 func _addAmmo( model, instances ) :
