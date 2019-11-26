@@ -10,7 +10,7 @@ func _ready() :
 
   var arena = levelData.get('arena', null )
   if arena != null :
-    _addFloor( arena.get('floorModel', null ), arena.get('length', null), arena.get('breadth', null))
+    _addArena( arena.get('floorModel', null ), arena.get('wallModel', null ), arena.get('length', null), arena.get('breadth', null))
 
   var ammo = levelData.get( 'AMMO', null )
   if ammo != null :
@@ -27,17 +27,51 @@ func _input( __ ) :    # Not using event so don't name it.
   if Input.is_action_just_pressed( 'maximize' ) :
     OS.window_fullscreen = not OS.window_fullscreen
 
-func _addFloor( model, length, breadth ):
+#-----------------------------------------------------------
+func _addArena( floorModel, wallModel, length, breadth ):
   var inst
-  var floorScene = load( model )
+  var floorScene = load( floorModel )
   var yTranslation = -1.3
   var floorLoopStep = 2
-  for i in range( int(-length/2), int(length/2), floorLoopStep) :
-    for j in range( int(-breadth/2), int(breadth/2), floorLoopStep) :
+
+  for i in range( (-length/2), (length/2), floorLoopStep) :
+    for j in range( (-breadth/2), (breadth/2), floorLoopStep) :
       inst = floorScene.instance()
       inst.translation = Vector3( i, -1.3, j )
-      get_node( '.' ).add_child( inst ) 
+      get_node( '.' ).add_child( inst )
   
+  var wallScene = load( wallModel )
+  var wallLength = 15
+  
+  var lengthScale = Utils.get_aabb( length, wallLength ) 
+  var i = -length / 2
+  while( i <= length / 2 ):
+    inst = wallScene.instance()
+    inst.translation = Vector3( breadth/2, 0, i )
+    inst.scale = Vector3( lengthScale, 1, 1 )
+    get_node( '.' ).add_child( inst )
+
+    inst = wallScene.instance()
+    inst.translation = Vector3( -breadth/2, 0, i )
+    inst.scale = Vector3( lengthScale, 1, 1 )
+    get_node( '.' ).add_child( inst )
+    i = i + lengthScale*wallLength
+
+  var breadthScale = Utils.get_aabb( breadth, wallLength ) 
+  i = -breadth / 2
+  while( i <= breadth / 2 ):
+    inst = wallScene.instance()
+    inst.translation = Vector3( i, 0, length/2 )
+    inst.scale = Vector3( breadthScale, 1, 1 )
+    inst.rotation_degrees = Vector3( 0, 90, 0 )
+    get_node( '.' ).add_child( inst )
+
+    inst = wallScene.instance()
+    inst.translation = Vector3( i, 0, -length/2 )
+    inst.scale = Vector3( breadthScale, 1, 1 )
+    inst.rotation_degrees = Vector3( 0, 90, 0 )
+    get_node( '.' ).add_child( inst )
+    i = i + breadthScale*wallLength
 
 #-----------------------------------------------------------
 func _addAmmo( model, instances ) :

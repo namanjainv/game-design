@@ -2,7 +2,7 @@
   "maxAmmo" : 40,
   "arena": {
     "floorModel": "res://Components/Floor/Floor.tscn",
-    "wallModel": " ",
+    "wallModel": "res://Components/Wall/Wall.tscn",
     "length": 60,
     "breadth": 60
   },

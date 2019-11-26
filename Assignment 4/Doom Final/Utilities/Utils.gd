@@ -52,5 +52,14 @@ func dieRoll( dieStr ) :
 
   return roll
 
+func get_aabb( length, modelSize ) :
+  var count = length * 1.0 / modelSize
+  var decimal = count - int( count )
+  var approxCount = int( count ) if decimal < 0.5 else int( count + 1 )
+  var modelNewSize = length / approxCount
+  var scale = modelNewSize * 1.0 / modelSize
+  return scale
+
+
 #-----------------------------------------------------------
 
