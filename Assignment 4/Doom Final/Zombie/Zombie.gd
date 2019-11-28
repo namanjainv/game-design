@@ -2,8 +2,6 @@ extends KinematicBody
 
 const MOVE_SPEED = 3
 
-const SENSE_DISTANCE = 20
-
 onready var raycast = $RayCast
 onready var anim_player = $AnimationPlayer
 
@@ -25,10 +23,6 @@ func _physics_process( delta ) :
     return
 
   var vec_to_player = player.translation - translation
-  if vec_to_player.length() > SENSE_DISTANCE :
-    # Too far away to sense the player.  Move in 'random' direction,
-    # which is in RADIANS.  The axis must normalized.
-    vec_to_player = vec_to_player.rotated( Vector3( 0, 1, 0 ), randf()*2*PI )
 
   vec_to_player = vec_to_player.normalized()
   raycast.cast_to = vec_to_player * 1.5

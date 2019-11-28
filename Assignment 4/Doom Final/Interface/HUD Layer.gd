@@ -75,6 +75,6 @@ func _opponentDied() :
       $'../Message Layer/Message/Background/Next'.visible = true
       $'../Message Layer/Message/Background/Restart'.disabled = true
       $'../Message Layer/Message/Background/Restart'.visible = false
-      $'../Message Layer/Message'.activate( 'Level %d Completed!\n%s' % UserData.CURRENT_LEVEL, timeStr );
+      $'../Message Layer/Message'.activate( 'Level %d \nCompleted!\n%s' % [ UserData.CURRENT_LEVEL, timeStr ] );
 
 #-----------------------------------------------------------
