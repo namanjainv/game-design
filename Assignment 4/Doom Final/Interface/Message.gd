@@ -41,3 +41,8 @@ func _on_Restart_pressed() :
   get_tree().reload_current_scene()
 
 #-----------------------------------------------------------
+
+func _on_Next_pressed():
+  get_tree().paused = false
+  UserData.increamentCurrentLevel()
+  get_tree().reload_current_scene()

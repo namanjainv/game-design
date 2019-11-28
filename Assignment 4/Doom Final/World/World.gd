@@ -5,8 +5,8 @@ const DEFAULT_MAX_AMMO = 10
 #-----------------------------------------------------------
 func _ready() :
   get_tree().paused = false
-
-  var levelData = _getLevelData( 1 )
+  
+  var levelData = _getLevelData( )
 
   var arena = levelData.get('arena', null )
   if arena != null :
@@ -157,11 +157,15 @@ func _addZombies( model, instances ) :
     get_node( '.' ).add_child( inst )
 
 #-----------------------------------------------------------
-func _getLevelData( levelNumber ) :
-  var levelData = {}
+func _getLevelData( ) :
+	
+  var user_data = UserData._getUserData()
+  var levelNumber = user_data.get( 'currentLevel', null )
+  var levelData = { }
+  if levelNumber == -1:
+     return levelData
 
   var fName = 'res://Levels/Level-%02d.json' % levelNumber
-
   var file = File.new()
   if file.file_exists( fName ) :
     file.open( fName, file.READ )

@@ -65,9 +65,16 @@ func _opponentDied() :
 
   if numOpponents == 0 :
     var timeStr = $'../HUD Layer'.getTimeStr()
-  
     print( 'Last opponent died at %s.' % timeStr )
-  
-    $'../Message Layer/Message'.activate( 'Player Wins!\n%s' % timeStr )
+    
+    if UserData.checkCompletionStatus( ):
+      UserData.increamentCurrentLevel()
+      $'../Message Layer/Message'.activate( 'Player Wins!\n%s' % timeStr )
+    else:
+      $'../Message Layer/Message/Background/Next'.disabled = false
+      $'../Message Layer/Message/Background/Next'.visible = true
+      $'../Message Layer/Message/Background/Restart'.disabled = true
+      $'../Message Layer/Message/Background/Restart'.visible = false
+      $'../Message Layer/Message'.activate( 'Level %d Completed!\n%s' % UserData.CURRENT_LEVEL, timeStr );
 
 #-----------------------------------------------------------

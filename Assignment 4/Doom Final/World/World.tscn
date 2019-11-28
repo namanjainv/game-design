@@ -103,7 +103,6 @@ custom_fonts/font = SubResource( 3 )
 text = "00/00"
 
 [node name="Message Layer" type="CanvasLayer" parent="."]
-editor/display_folded = true
 layer = 100
 
 [node name="Message" type="Control" parent="Message Layer"]
@@ -147,6 +146,20 @@ margin_bottom = 37.0
 custom_fonts/font = SubResource( 6 )
 text = "Restart"
 
+[node name="Next" type="Button" parent="Message Layer/Message/Background"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -100.0
+margin_top = -33.0
+margin_right = 100.0
+margin_bottom = 37.0
+custom_fonts/font = SubResource( 6 )
+disabled = true
+text = "Next"
+
 [node name="Exit" type="Button" parent="Message Layer/Message/Background"]
 anchor_left = 0.5
 anchor_top = 0.5
@@ -159,4 +172,5 @@ margin_bottom = 128.0
 custom_fonts/font = SubResource( 7 )
 text = "Exit"
 [connection signal="pressed" from="Message Layer/Message/Background/Restart" to="Message Layer/Message" method="_on_Restart_pressed"]
+[connection signal="pressed" from="Message Layer/Message/Background/Next" to="Message Layer/Message" method="_on_Next_pressed"]
 [connection signal="pressed" from="Message Layer/Message/Background/Exit" to="Message Layer/Message" method="_on_Exit_pressed"]

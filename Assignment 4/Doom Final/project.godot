@@ -22,6 +22,7 @@ config/icon="res://Images/icon.png"
 [autoload]
 
 Utils="*res://Utilities/Utils.gd"
+UserData="*res://Utilities/UserData.gd"
 
 [display]
 
