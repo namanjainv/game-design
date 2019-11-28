@@ -91,10 +91,13 @@ func kill() :
 
   $'../Message Layer/Message'.activate( 'Player Died\n%s' % timeStr )
 
+func hurt( qty ) :
+  $'../HUD Layer'._decrementHealth( qty )
+
 #-----------------------------------------------------------
 func burstImpact( burst_translation, radius = 1, impact = 1 ):
   var dist = translation.distance_to( burst_translation ) 
   if dist < radius:
-    kill()
+    hurt( impact )
 
 #-----------------------------------------------------------

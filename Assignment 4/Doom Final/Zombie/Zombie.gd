@@ -1,6 +1,7 @@
 extends KinematicBody
 
 const MOVE_SPEED = 3
+const COOLDOWN_TIME = 200
 
 onready var raycast = $RayCast
 onready var anim_player = $AnimationPlayer
@@ -8,6 +9,7 @@ onready var anim_player = $AnimationPlayer
 var player = null
 var dead = false
 var health = 1
+var coolTime = 200
 
 #-----------------------------------------------------------
 func _ready() :
@@ -22,7 +24,12 @@ func _physics_process( delta ) :
   if player == null :
     return
 
-  var vec_to_player = player.translation - translation
+  var vec_to_player  
+  if coolTime > COOLDOWN_TIME:
+    vec_to_player = player.translation - translation
+  else:
+    vec_to_player = - player.translation + translation
+  coolTime += 1
 
   vec_to_player = vec_to_player.normalized()
   raycast.cast_to = vec_to_player * 1.5
@@ -32,8 +39,9 @@ func _physics_process( delta ) :
 
   if raycast.is_colliding() :
     var coll = raycast.get_collider()
-    if coll != null and coll.name == 'Player' :
-      coll.kill()
+    if coll != null and coll.name == 'Player' and coolTime > COOLDOWN_TIME:
+      coolTime = 0
+      coll.hurt( 1 )
 
 #-----------------------------------------------------------
 func hurt( howMuch = 1 ) :

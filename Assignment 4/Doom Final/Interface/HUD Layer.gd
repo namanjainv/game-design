@@ -78,3 +78,22 @@ func _opponentDied() :
       $'../Message Layer/Message'.activate( 'Level %d \nCompleted!\n%s' % [ UserData.CURRENT_LEVEL, timeStr ] );
 
 #-----------------------------------------------------------
+var maxHealth = 0
+var minHealth = 0
+
+func _resetHealth( qty ) :
+  minHealth = qty
+  maxHealth = qty
+  _setHealthMessage()
+
+func _setHealthMessage() :
+  get_node( 'Health' ).text = '%d / %d' % [ minHealth, maxHealth ]
+
+func _decrementHealth( qty ) :
+  minHealth -= qty
+
+  _setHealthMessage()
+
+  if minHealth < 0 :
+    $'../Player'.kill( )
+

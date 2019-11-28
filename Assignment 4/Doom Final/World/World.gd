@@ -25,6 +25,7 @@ func _ready() :
     _addZombies( zombies.get( 'tscn', null ), zombies.get( 'instances', [] ) )
 
   get_node( 'HUD Layer' )._resetAmmo( levelData.get( 'maxAmmo', DEFAULT_MAX_AMMO ) )
+  get_node( 'HUD Layer' )._resetHealth( levelData.get( 'maxHealth', DEFAULT_MAX_AMMO ) )
 
 #-----------------------------------------------------------
 func _input( __ ) :    # Not using event so don't name it.

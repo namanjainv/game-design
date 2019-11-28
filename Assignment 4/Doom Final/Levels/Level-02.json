@@ -1,5 +1,6 @@
 {
   "maxAmmo" : 20,
+  "maxHealth" : 10,
   "arena": {
     "floorModel": "res://Components/Floor/Floor.tscn",
     "wallModel": "res://Components/Wall/Wall.tscn",

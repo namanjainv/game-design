@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://World/World.gd" type="Script" id=1]
 [ext_resource path="res://Audio/Pew_Pew-DKnight556-1379997159.wav" type="AudioStream" id=2]
@@ -9,6 +9,12 @@
 [ext_resource path="res://Interface/HUD Layer.gd" type="Script" id=7]
 [ext_resource path="res://Interface/Fonts/Montserrat-ExtraBold.ttf" type="DynamicFontData" id=8]
 [ext_resource path="res://Interface/Message.gd" type="Script" id=9]
+
+[sub_resource type="DynamicFont" id=8]
+size = 46
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 8 )
 
 [sub_resource type="DynamicFont" id=1]
 size = 48
@@ -65,9 +71,17 @@ stream = ExtResource( 5 )
 script = ExtResource( 6 )
 
 [node name="HUD Layer" type="CanvasLayer" parent="."]
-editor/display_folded = true
 layer = 50
 script = ExtResource( 7 )
+
+[node name="Health" type="Label" parent="HUD Layer"]
+margin_left = 30.0
+margin_top = 10.0
+margin_right = 260.0
+margin_bottom = 70.0
+custom_fonts/font = SubResource( 8 )
+text = "00 / 00"
+autowrap = true
 
 [node name="Opponents" type="Label" parent="HUD Layer"]
 anchor_top = 1.0
@@ -99,6 +113,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -200.0
 margin_top = -70.0
+rect_pivot_offset = Vector2( 106.07, 21.0154 )
 custom_fonts/font = SubResource( 3 )
 text = "00/00"
 
