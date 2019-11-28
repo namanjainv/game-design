@@ -71,6 +71,7 @@ stream = ExtResource( 5 )
 script = ExtResource( 6 )
 
 [node name="HUD Layer" type="CanvasLayer" parent="."]
+editor/display_folded = true
 layer = 50
 script = ExtResource( 7 )
 
@@ -118,6 +119,7 @@ custom_fonts/font = SubResource( 3 )
 text = "00/00"
 
 [node name="Message Layer" type="CanvasLayer" parent="."]
+editor/display_folded = true
 layer = 100
 
 [node name="Message" type="Control" parent="Message Layer"]

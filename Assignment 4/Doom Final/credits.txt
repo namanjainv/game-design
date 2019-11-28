@@ -2,7 +2,7 @@ Art:
 Wall - https://sketchfab.com/3d-models/simple-wood-fence-20-a73260f44d084c9ab06e140a273cd4af
 Floor - https://sketchfab.com/3d-models/stone-floor-6493c7c3913d44debbcdceb3386d2d54
 Barrel - https://sketchfab.com/3d-models/metal-barrel-9578b86b4c6147c3982e38811109dd91
-
+First Aid - https://sketchfab.com/3d-models/first-aid-kit-7e596619db6e4434af091a40a43d9d30
 
 Sound:
 Barrel Burst - 

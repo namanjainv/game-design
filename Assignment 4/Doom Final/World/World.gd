@@ -23,6 +23,10 @@ func _ready() :
   var zombies = levelData.get( 'ZOMBIES', null )
   if zombies != null :
     _addZombies( zombies.get( 'tscn', null ), zombies.get( 'instances', [] ) )
+	
+  var healthKits = levelData.get( 'HEALTH_KITS', null )
+  if healthKits != null :
+    _addHealthKits( healthKits.get( 'tscn', null ), healthKits.get( 'instances', [] ) )
 
   get_node( 'HUD Layer' )._resetAmmo( levelData.get( 'maxAmmo', DEFAULT_MAX_AMMO ) )
   get_node( 'HUD Layer' )._resetHealth( levelData.get( 'maxHealth', DEFAULT_MAX_AMMO ) )
@@ -97,6 +101,31 @@ func _addAmmo( model, instances ) :
 
     inst = ammoScene.instance()
     inst.name = 'Ammo-%02d' % index
+    inst.translation = Vector3( pos[0], pos[1], pos[2] )
+    inst.setQuantity( amount )
+    print( '%s at %s, %d rounds.' % [ inst.name, str( pos ), amount ] )
+
+    get_node( '.' ).add_child( inst )
+
+#-----------------------------------------------------------
+func _addHealthKits( model, instances ) :
+  var inst
+  var index = 0
+
+  if model == null :
+    print( 'There were %d health kits but no model?' % len( instances ) )
+    return
+
+  var healthKitScene = load( model )
+
+  for instInfo in instances :
+    index += 1
+
+    var pos = instInfo[ 0 ]
+    var amount  = Utils.dieRoll( instInfo[ 1 ] )
+
+    inst = healthKitScene.instance()
+    inst.name = 'Health-Kit-%02d' % index
     inst.translation = Vector3( pos[0], pos[1], pos[2] )
     inst.setQuantity( amount )
     print( '%s at %s, %d rounds.' % [ inst.name, str( pos ), amount ] )

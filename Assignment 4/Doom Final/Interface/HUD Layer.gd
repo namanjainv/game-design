@@ -47,6 +47,14 @@ func _ammoUsed() :
   _setAmmoMessage()
   return success
 
+func _increamentAmmo( qty ):
+  if numAmmo == maxAmmo:
+    return false
+  var newAmmo = numAmmo + qty
+  numAmmo = newAmmo if newAmmo <= maxAmmo else maxAmmo
+  _setAmmoMessage()
+  return true
+  
 #-----------------------------------------------------------
 var maxOpponents = 0
 var numOpponents = 0
@@ -79,21 +87,24 @@ func _opponentDied() :
 
 #-----------------------------------------------------------
 var maxHealth = 0
-var minHealth = 0
+var currHealth = 0
 
 func _resetHealth( qty ) :
-  minHealth = qty
+  currHealth = qty
   maxHealth = qty
   _setHealthMessage()
 
 func _setHealthMessage() :
-  get_node( 'Health' ).text = '%d / %d' % [ minHealth, maxHealth ]
+  get_node( 'Health' ).text = '%d / %d' % [ currHealth, maxHealth ]
 
-func _decrementHealth( qty ) :
-  minHealth -= qty
+func _increamentHealth( qty ) :
+  if currHealth == maxHealth and qty > 0:
+    return false
+  currHealth += qty
+  currHealth = currHealth if currHealth <= maxHealth else maxHealth
 
   _setHealthMessage()
-
-  if minHealth < 0 :
+  if currHealth < 0 :
     $'../Player'.kill( )
+  return true
 

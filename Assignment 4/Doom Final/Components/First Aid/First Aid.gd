@@ -15,5 +15,6 @@ func setQuantity( qty ) :
 #-----------------------------------------------------------
 
 func _on_Area_body_entered(body):
-  if( $'../HUD Layer'._increamentAmmo( quantity ) == true):
+  if( $'../HUD Layer'._increamentHealth( quantity ) == true ):
     self.queue_free()
+  
