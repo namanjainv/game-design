@@ -84,6 +84,15 @@ func _physics_process( delta ) :
 
     else :
       $'../Player Audio'._playSound( 'empty' )
+	
+  if Input.is_action_just_pressed( 'hit' ) and !anim_player.is_playing() :
+    
+    anim_player.play( 'hit' )
+    $'../Player Audio'._playSound( 'shoot' )
+
+    var coll = raycast.get_collider()
+    if raycast.is_colliding() and coll.has_method( 'burstImpact' ) :
+        get_tree().call_group( 'zombies', 'burstImpact', translation, 5, 2 )
 
 #-----------------------------------------------------------
 func kill() :

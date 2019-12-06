@@ -1,11 +1,26 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/Images/crosshair.png" type="Texture" id=2]
-[ext_resource path="res://Player/Images/fps_shooter_sprites.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Player/fps_shooter_sprites.png" type="Texture" id=3]
 [ext_resource path="res://Player/Images/scopeSight.png" type="Texture" id=4]
 
 [sub_resource type="CapsuleShape" id=1]
+
+[sub_resource type="Animation" id=4]
+resource_name = "hit"
+tracks/0/type = "value"
+tracks/0/path = NodePath("View/Crosshair/Control/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 6, 7, 8, 9, 10, 11, 0 ]
+}
 
 [sub_resource type="Animation" id=2]
 resource_name = "idle"
@@ -71,7 +86,8 @@ margin_bottom = 416.0
 [node name="Sprite" type="Sprite" parent="View/Crosshair/Control"]
 position = Vector2( 256, -257.587 )
 texture = ExtResource( 3 )
-hframes = 4
+vframes = 2
+hframes = 6
 
 [node name="Scopesight" type="TextureRect" parent="View"]
 visible = false
@@ -81,6 +97,7 @@ texture = ExtResource( 4 )
 expand = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/hit = SubResource( 4 )
 anims/idle = SubResource( 2 )
 anims/shoot = SubResource( 3 )
 
