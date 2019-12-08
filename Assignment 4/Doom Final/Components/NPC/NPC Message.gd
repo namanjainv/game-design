@@ -35,16 +35,18 @@ func _on_Exit_pressed():
 
 #-----------------------------------------------------------
 func _on_HealthKit_pressed():
-  healthButton.visible = false
-  ammoButton.visible = false
   visible = false
-  used = true
+  if( $'../../../HUD Layer'._increamentHealth( 10 ) == true ):
+    used = true
+    healthButton.visible = false
+    ammoButton.visible = false
   get_tree().paused = false
 
 #-----------------------------------------------------------
 func _on_AmmoKit_pressed():
-  healthButton.visible = false
-  ammoButton.visible = false
   visible = false
-  used = true
+  if( $'../../../HUD Layer'._increamentAmmo( 20 ) == true ):
+    used = true
+    healthButton.visible = false
+    ammoButton.visible = false
   get_tree().paused = false
