@@ -19,6 +19,13 @@
     ]
   },
 
+  "NPC" : {
+    "tscn"  : "res://Components/NPC/NPC.tscn",
+
+    "instances" : [
+      [ [ -5,   0.0,  5  ], "2d2" ] ]
+  },
+
   "HEALTH_KITS" : {
     "tscn" : "res://Components/First Aid/First Aid.tscn",
 

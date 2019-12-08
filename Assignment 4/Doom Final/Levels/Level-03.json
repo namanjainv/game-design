@@ -19,6 +19,13 @@
     ]
   },
 
+  "NPC" : {
+    "tscn"  : "res://Components/NPC/NPC.tscn",
+
+    "instances" : [
+      [ [ -5,   0.0,  5  ], "2d2" ] ]
+  },
+
   "HEALTH_KITS" : {
     "tscn" : "res://Components/First Aid/First Aid.tscn",
 
@@ -39,6 +46,8 @@
     },
 
     "instances" : [
+      [ [ -18.4463,   0,  14.1263  ], "2d2" ],
+      [ [ -29.9256,   0,   8.86691 ], "2d2" ],
       [ [ -18.4463,   0,  14.1263  ], "2d2" ],
       [ [ -29.9256,   0,   8.86691 ], "2d2" ] ]
   },
