@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Teleport Machine/scene.gltf" type="PackedScene" id=1]
+[ext_resource path="res://Components/Teleport/Teleport.gd" type="Script" id=2]
+
+[sub_resource type="CylinderShape" id=1]
+
+[sub_resource type="CylinderShape" id=2]
+
+[node name="Scene Root" instance=ExtResource( 1 )]
+transform = Transform( 0.0135907, 0, 0, 0, 0.0163338, 0, 0, 0, 0.0119863, 0, -0.734035, 0 )
+script = ExtResource( 2 )
+
+[node name="RootNode" parent="RootNode (gltf orientation matrix)/RootNode (model correction matrix)/Teleportfbx" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -38.169, 0 )
+
+[node name="Teleport" parent="RootNode (gltf orientation matrix)/RootNode (model correction matrix)/Teleportfbx/RootNode" index="0"]
+transform = Transform( 100, 0, 0, 0, -1.91794e-005, 117.722, 0, -100, -1.62921e-005, 0, -10.742, 0 )
+
+[node name="StaticBody" type="StaticBody" parent="." index="1"]
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
+transform = Transform( 215.965, 0, 0, 0, 27.8627, 0, 0, 0, 186.854, 14.7123, 8.7467, -13.3322 )
+shape = SubResource( 1 )
+
+[node name="Area" type="Area" parent="." index="2"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Area" index="0"]
+transform = Transform( 143.263, 0, 0, 0, 129.136, 0, 0, 0, 134.204, 0, 82.6804, 0 )
+shape = SubResource( 2 )
+[connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]

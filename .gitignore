@@ -6,3 +6,4 @@
 *.material
 textures
 Assets
+.DS_Store
